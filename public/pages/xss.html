@@ -12,7 +12,11 @@
 <body>
     <section class="hero is-success is-fullheight">
         <div class="container has-text-centered">
-            <form action="/xss-submit" method="GET">
+            <!-- Include the script in your HTML file -->
+            <script src="xss-script.js"></script>
+
+            <!-- Update your form with an id attribute -->
+            <form id="xssForm" action="/xss-submit" method="GET">
                 <div class="field">
                     <label for="employeeSearch" class="label">Search for Employee</label>
                     <div class="control">
@@ -24,9 +28,9 @@
                     <div class="control">
                         <button class="button is-link">Submit</button>
                     </div>
-
                 </div>
             </form>
+
             <div class="content" style="margin-top: 10px; max-width: 50vw;">
                 <h1 class="subtitle">
                     <p class="title">Tip: Try These in Insecure Mode</p>
@@ -60,6 +64,7 @@
             </div>
         </div>
     </section>
+    <script src="../xss-script.js"></script>
 </body>
 
 </html>

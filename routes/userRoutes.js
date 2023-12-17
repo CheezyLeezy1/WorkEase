@@ -30,10 +30,8 @@ router.post("/register", (req, res) => {
 });
 
 router.post("/login", (req, res) => {
-  // const email = req.sanitize(req.body.email);
-  // const password = req.sanitize(req.body.password);
-  const email = req.body.email;
-  const password = req.body.password;
+  const email = req.sanitize(req.body.email);
+  const password = req.sanitize(req.body.password);
 
   try {
     if (!email || !password) {
@@ -41,22 +39,13 @@ router.post("/login", (req, res) => {
       return res.status(400).json({ error: "Email and password are required" });
     }
 
-    // const hashedPassword = md5(password);
+    const hashedPassword = md5(password);
 
-    // console.log("Attempting login with email:", email);
-    // console.log("Hashed Password:", hashedPassword);
+    console.log("Attempting login with email:", email);
+    console.log("Hashed Password:", hashedPassword);
 
-    // const selectUser = "SELECT * FROM users WHERE email = ? AND password = ?";
-    // db.get(selectUser, [email, hashedPassword], (err, row) => {
-    //   if (err) {
-    //     console.error("Database error during login:", err.message);
-    //     return res
-    //       .status(500)
-    //       .json({ error: "Internal Server Error during login" });
-    //   }
-
-    const selectUser = `SELECT * FROM users WHERE email = '${email}' AND password = '${password}'`;
-    db.get(selectUser, (err, row) => {
+    const selectUser = "SELECT * FROM users WHERE email = ? AND password = ?";
+    db.get(selectUser, [email, hashedPassword], (err, row) => {
       if (err) {
         console.error("Database error during login:", err.message);
         return res

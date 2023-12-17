@@ -5,7 +5,9 @@ const path = require("path");
 const bodyParser = require("body-parser");
 const cookieSession = require("cookie-session");
 const crypto = require("crypto");
+const sanitizer = require("express-sanitizer");
 
+app.use(sanitizer());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
@@ -50,7 +52,8 @@ app.get("/xss", (req, res) => {
 });
 
 app.get("/xss-submit", (req, res) => {
-  const { name } = req.query;
+  // Use req.query.name to get the 'name' parameter from the query string
+  const name = req.sanitize(req.query.name);
 
   res.send(`
     <!DOCTYPE html>
@@ -72,11 +75,11 @@ app.get("/xss-submit", (req, res) => {
                 Welcome to the XSS Vulnerability Page
             </p>
             <p class="subtitle">
-            <p class="title">Welcome, ${name}!</p>
+            <p class="title">Welcome, ${name || "Guest"}!</p>
             </p>
 
             <p class="subtitle">
-            <p class="title">Well... seems like this page could introduce some vulerabilities, shame....</p>
+            <p class="title">Well... seems like this page could introduce some vulnerabilities, shame....</p>
             </p>
         </div>
     </div>
