@@ -29,22 +29,22 @@ function validateLoginForm() {
     return; // Prevent form submission if fields are empty
   }
 
-  // // Check for valid email format
-  // if (!isValidEmail(emailValue)) {
-  //   emailError.textContent = "Invalid email address";
-  //   return;
-  // } else {
-  //   emailError.textContent = "";
-  // }
+  // Check for valid email format
+  if (!isValidEmail(emailValue)) {
+    emailError.textContent = "Invalid email address";
+    return;
+  } else {
+    emailError.textContent = "";
+  }
 
-  // // Check for password requirements (at least 6 characters and one number)
-  // if (!isValidPassword(passwordValue)) {
-  //   passwordError.textContent =
-  //     "Password must be at least 6 characters long and contain at least one number";
-  //   return;
-  // } else {
-  //   passwordError.textContent = "";
-  // }
+  // Check for password requirements (at least 6 characters and one number)
+  if (!isValidPassword(passwordValue)) {
+    passwordError.textContent =
+      "Password must be at least 6 characters long and contain at least one number";
+    return;
+  } else {
+    passwordError.textContent = "";
+  }
 
   // If all validations pass, submit the form
   alert("User " + emailValue + "Logged in!");
