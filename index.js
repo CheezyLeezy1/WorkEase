@@ -6,8 +6,11 @@ const bodyParser = require("body-parser");
 const cookieSession = require("cookie-session");
 const crypto = require("crypto");
 const sanitizer = require("express-sanitizer");
+const helmet = require("helmet");
 
+app.use(helmet());
 app.use(sanitizer());
+
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
