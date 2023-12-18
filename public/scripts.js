@@ -1,4 +1,4 @@
-const emailInput = document.querySelector('input[type="text"]');
+const emailInput = document.querySelector('input[name="email"]');
 const passwordInput = document.querySelector('input[type="password"]');
 const nameInput = document.querySelector('input[name="name"]');
 const companyInput = document.querySelector('input[name="company"]');
@@ -52,7 +52,6 @@ function validateLoginForm() {
 }
 
 function validateSignUpForm(event) {
-  event.preventDefault();
   const emailValue = emailInput.value.trim();
   const passwordValue = passwordInput.value.trim();
   const nameValue = nameInput.value.trim();
@@ -90,12 +89,15 @@ function validateSignUpForm(event) {
 
     return; // Prevent form submission if fields are empty
   }
+  console.log("Email Value:", emailValue);
 
   // Check for valid email format
   if (!isValidEmail(emailValue)) {
+    console.log("Invalid Email");
     emailError.textContent = "Invalid email address";
     return;
   } else {
+    console.log("Valid Email");
     emailError.textContent = "";
   }
 
@@ -120,3 +122,23 @@ function isValidEmail(email) {
 function isValidPassword(password) {
   return password.length >= 6 && /\d/.test(password);
 }
+
+document.addEventListener("DOMContentLoaded", function () {
+  // Add event listener for login button
+  const loginButton = document.querySelector("#loginButton");
+  if (loginButton) {
+    loginButton.addEventListener("click", function (event) {
+      event.preventDefault(); // Prevent the default form submission
+      validateLoginForm();
+    });
+  }
+
+  // Add event listener for sign-up button
+  const signUpButton = document.querySelector("#signUpButton");
+  if (signUpButton) {
+    signUpButton.addEventListener("click", function (event) {
+      event.preventDefault(); // Prevent the default form submission
+      validateSignUpForm(event);
+    });
+  }
+});

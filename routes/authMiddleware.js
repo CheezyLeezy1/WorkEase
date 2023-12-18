@@ -4,7 +4,7 @@ function requireAuth(req, res, next) {
     next();
   } else {
     // User is not authenticated, redirect to the login page
-    res.redirect("/login");
+    res.redirect("/loginPage");
   }
 }
 
