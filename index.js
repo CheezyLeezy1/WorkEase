@@ -1,6 +1,7 @@
 const express = require("express");
 const app = express();
 const port = 3000;
+const morgan = require("morgan");
 const path = require("path");
 const bodyParser = require("body-parser");
 const cookieSession = require("cookie-session");
@@ -16,6 +17,7 @@ app.use(helmet());
 app.use(sanitizer());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
+app.use(morgan("combined"));
 
 app.use(
   expressCspHeader({
@@ -57,6 +59,9 @@ function generateSessionSecret() {
 // Routes
 app.use("/users", userRoutes);
 app.use(express.static(path.join(__dirname, "public")));
+app.use(
+  morgan(":method :url :status :response-time ms - :res[content-length]")
+);
 
 app.get("/", (req, res) => {
   res.sendFile(__dirname + "/public/index.html");
