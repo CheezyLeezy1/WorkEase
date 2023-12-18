@@ -7,7 +7,7 @@ const sanitizer = require("express-sanitizer");
 router.use(sanitizer());
 
 // Register a new user
-router.post("/register", (req, res) => {
+router.post("/secureRegister", (req, res) => {
   const name = req.sanitize(req.body.name);
   const company = req.sanitize(req.body.company);
   const email = req.sanitize(req.body.email);
@@ -24,12 +24,14 @@ router.post("/register", (req, res) => {
       console.error("Database insertion error:", err.message);
       return res.status(500).json({ error: "Error during user registration" });
     }
-    req.session.userId = this.lastID;
+    const userId = this.lastID;
+
+    req.session.userId = userId;
     res.redirect("/dashboard");
   });
 });
 
-router.post("/login", (req, res) => {
+router.post("/secureLogin", (req, res) => {
   const email = req.sanitize(req.body.email);
   const password = req.sanitize(req.body.password);
 
@@ -59,7 +61,7 @@ router.post("/login", (req, res) => {
       }
 
       console.log("Login successful for email:", email);
-      req.session.userId = row.userId;
+      req.session.userId = row.id;
       console.log(row.userId);
       res.redirect("/dashboard");
     });
